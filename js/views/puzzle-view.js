@@ -11,13 +11,16 @@ $(function( $ ) {
 		},
 
 		initialize: function() {
-			// Add 5 pieces to the puzzle
-			for (var i=0; i<5; i++) {
+			// Add 4 pieces to the puzzle
+			for (var i=1; i<5; i++) {
 				this.addPuzzlePiece(i);
 			}
 
 			// allow the pieces to be moved around
-			$('.piece').draggable();
+			$('.piece').draggable({
+				snap: true,
+				snapMode: "both"
+			});
 		},
 
 		render: function() {
