@@ -6,7 +6,10 @@ $(function() {
 	app.Piece = Backbone.Model.extend({
 
 		defaults: {
-			name: 'piece'
+			topValue: 0,
+			leftValue: 0,
+			rightValue: 0,
+			bottomValue: 0
 		},
 
 	});

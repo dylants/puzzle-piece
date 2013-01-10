@@ -7,7 +7,7 @@ $(function( $ ) {
 
 		tagName: 'span',
 
-		className: 'piece well',//'span1 well',
+		className: 'piece',//'span1 well',
 
 		template: _.template( $('#piece-template').html() ),
 

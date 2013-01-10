@@ -25,7 +25,10 @@ $(function( $ ) {
 
 		addPuzzlePiece: function(n) {
 			var piece = new app.Piece({
-				name: n
+				topValue: n,
+				leftValue: n,
+				rightValue: n,
+				bottomValue: n
 			});
 			var pieceView = new app.PieceView({ model: piece});
 			$('#pieces').append(pieceView.render().el);
