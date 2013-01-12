@@ -11,12 +11,9 @@ $(function( $ ) {
 		},
 
 		initialize: function() {
-			// a reference to all the pieces
-			puzzle.pieces = {};
-
-			// Add 4 pieces to the puzzle
-			for (var i=1; i<5; i++) {
-				puzzle.addPuzzlePiece(i);
+			// Add all the pieces to the puzzle
+			for (var name in puzzle.puzzlePieces) {
+				this.addPuzzlePiece(name, puzzle.puzzlePieces[name]);
 			}
 
 			// allow the pieces to be moved around
@@ -28,6 +25,21 @@ $(function( $ ) {
 		},
 
 		render: function() {
+		},
+
+		addPuzzlePiece: function(name, puzzlePieceValues) {
+			// create a piece
+			var piece = new puzzle.Piece({
+				name: name,
+				topValue: puzzlePieceValues.topValue,
+				leftValue: puzzlePieceValues.leftValue,
+				rightValue: puzzlePieceValues.rightValue,
+				bottomValue: puzzlePieceValues.bottomValue
+			});
+
+			// create a view using the piece, and add it to our page
+			var pieceView = new puzzle.PieceView({ model: piece });
+			$('#pieces').append(pieceView.render().el);
 		}
 	});
 });
