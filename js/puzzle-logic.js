@@ -39,16 +39,20 @@ puzzle.findPiecePairs = function(pieceA, pieceB) {
 			// piece A is below piece B
 			return {
 				pieceAId: pieceA.id,
+				pieceASide: "top",
 				pieceANumber: puzzle.puzzlePieces[pieceA.id].topValue,
 				pieceBId: pieceB.id,
+				pieceBSide: "bottom",
 				pieceBNumber: puzzle.puzzlePieces[pieceB.id].bottomValue
 			};
 		} else {
 			// piece A is above piece B
 			return {
 				pieceAId: pieceA.id,
+				pieceASide: "bottom",
 				pieceANumber: puzzle.puzzlePieces[pieceA.id].bottomValue,
 				pieceBId: pieceB.id,
+				pieceBSide: "top",
 				pieceBNumber: puzzle.puzzlePieces[pieceB.id].topValue
 			};
 		}
@@ -58,16 +62,20 @@ puzzle.findPiecePairs = function(pieceA, pieceB) {
 			// piece A is to the right of piece B
 			return {
 				pieceAId: pieceA.id,
+				pieceASide: "left",
 				pieceANumber: puzzle.puzzlePieces[pieceA.id].leftValue,
 				pieceBId: pieceB.id,
+				pieceBSide: "right",
 				pieceBNumber: puzzle.puzzlePieces[pieceB.id].rightValue
 			};
 		} else {
 			// piece A is to the left of piece B
 			return {
 				pieceAId: pieceA.id,
+				pieceASide: "right",
 				pieceANumber: puzzle.puzzlePieces[pieceA.id].rightValue,
 				pieceBId: pieceB.id,
+				pieceBSide: "left",
 				pieceBNumber: puzzle.puzzlePieces[pieceB.id].leftValue
 			};
 		}
@@ -80,6 +88,8 @@ puzzle.findPiecePairs = function(pieceA, pieceB) {
 
 puzzle.verifyPieceFits = function(piecePairsArray) {
 	var doesItFit = true;
+	var fitPieceIds = [];
+	var failPieceIds = [];
 
 	// loop on the array to make sure each pieceA fits with pieceB
 	if (piecePairsArray && piecePairsArray.length > 0) {
@@ -94,14 +104,34 @@ puzzle.verifyPieceFits = function(piecePairsArray) {
 			if (piecePairs.pieceANumber + piecePairs.pieceBNumber !== 0) {
 				// awww... you failed at life
 				doesItFit = false;
+				if (failPieceIds.indexOf(piecePairs.pieceAId) === -1) {
+					failPieceIds.push(piecePairs.pieceAId);
+				}
+				if (failPieceIds.indexOf(piecePairs.pieceBId) === -1) {
+					failPieceIds.push(piecePairs.pieceBId);
+				}
+			} else {
+				// yay! win! let's remember these IDs for later
+				if (fitPieceIds.indexOf(piecePairs.pieceAId) === -1) {
+					fitPieceIds.push(piecePairs.pieceAId);
+				}
+				if (fitPieceIds.indexOf(piecePairs.pieceBId) === -1) {
+					fitPieceIds.push(piecePairs.pieceBId);
+				}
 			}
 		}
 	}
 
 	if (doesItFit) {
 		console.log("*** YES ***");
+		for (var i=0; i<fitPieceIds.length; i++) {
+			$("#" + fitPieceIds[i]).addClass("pieceFits");
+		}
 	} else {
 		console.log("*** NO ***");
+		for (var i=0; i<failPieceIds.length; i++) {
+			$("#" + failPieceIds[i]).addClass("pieceDoesNotFit");
+		}
 	}
 };
 

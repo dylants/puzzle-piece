@@ -20,6 +20,10 @@ $(function( $ ) {
 			$('.piece').draggable({
 				snap: ".piece",
 				snapMode: "both",
+				start: function() {
+					// when we start moving a piece, we must clear fit classes
+					$(this).removeClass("pieceFits").removeClass("pieceDoesNotFit");
+				},
 				stop: puzzle.findSnappedPieces
 			});
 		},
