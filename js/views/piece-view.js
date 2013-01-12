@@ -1,13 +1,13 @@
-var app = app || {};
+var puzzle = puzzle || {};
 
 $(function( $ ) {
 	'use strict';
 
-	app.PieceView = Backbone.View.extend({
+	puzzle.PieceView = Backbone.View.extend({
 
 		tagName: 'span',
 
-		className: 'piece',//'span1 well',
+		className: 'piece',
 
 		template: _.template( $('#piece-template').html() ),
 
@@ -20,7 +20,8 @@ $(function( $ ) {
 		},
 
 		render: function() {
-			this.$el.html( this.template( this.model.toJSON() ) );
+			$(this.el).html( this.template( this.model.toJSON() ) );
+			$(this.el).attr('id', this.model.get("name"));
 			return this;
 		}
 

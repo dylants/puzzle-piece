@@ -1,9 +1,9 @@
-var app = app || {};
+var puzzle = puzzle || {};
 
 $(function() {
 	'use strict';
 
-	var Workspace = Backbone.Router.extend({
+	puzzle.Workspace = Backbone.Router.extend({
 		routes:{
 			'.*': 'index'
 		},
@@ -13,8 +13,8 @@ $(function() {
 		}
 	});
 
-	app.PuzzleRouter = new Workspace();
-	new app.PuzzleView();
+	puzzle.PuzzleRouter = new puzzle.Workspace();
+	new puzzle.PuzzleView();
 	Backbone.history.start();
 
 });

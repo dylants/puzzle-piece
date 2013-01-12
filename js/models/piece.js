@@ -1,16 +1,17 @@
-var app = app || {};
+var puzzle = puzzle || {};
 
 $(function() {
 	'use strict';
 
-	app.Piece = Backbone.Model.extend({
+	puzzle.Piece = Backbone.Model.extend({
 
 		defaults: {
+			name: "myName",
 			topValue: 0,
 			leftValue: 0,
 			rightValue: 0,
 			bottomValue: 0
-		},
+		}
 
 	});
 
