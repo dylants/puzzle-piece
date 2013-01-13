@@ -1,42 +1,67 @@
-#puzzle p {
-	margin-bottom: 50px;
+@piece-width: 90px;
+@piece-height: 90px;
+
+#puzzle {
+	margin: 20px;
+	p {
+		margin-bottom: 50px;
+	}
 }
 
 .piece {
-	width: 90px;
-	height: 90px;
+	width: @piece-width;
+	height: @piece-height;
 	display: inline-block;
 	background-color: #B8B8B8;
 	color: #000;
 	.top {
-		height: 30px;
+		height: @piece-height / 3;
 		text-align: center;
 	}
 	.middle {
-		height: 30px;
+		height: @piece-height / 3;
 		.left {
 			padding-left: 3px;
-			width: 40px;
+			width: @piece-width / 2 - 5;
 			display: inline-block;
 			text-align: left;
 			padding-top: 5px;
 		}
 		.right {
-			width: 40px;
+			width: @piece-width / 2 - 5;
 			display: inline-block;
 			text-align: right;
 			padding-top: 5px;
 		}
 	}
 	.bottom {
-		height: 30px;
+		height: @piece-height / 3;
 		position: relative;
 		.bottom-content {
-			width: 90px;
+			width: @piece-width;
 			position: absolute;
 			bottom: 0;
 			text-align: center;
 		}
+	}
+}
+
+#flippers {
+	#flip-horizontally, #flip-vertically {
+		width: @piece-width + (@piece-width / 4);
+		height: @piece-height + (@piece-height / 4);
+		display: table;
+		background-color: rgb(127, 188, 245);
+		color: #000;	
+	}
+	#flip-buffer {
+		height: 25px;
+		display: block;
+	}
+	.flip-content {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
 	}
 }
 

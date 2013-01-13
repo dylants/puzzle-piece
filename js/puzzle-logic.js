@@ -1,13 +1,23 @@
 var puzzle = puzzle || {};
 
-puzzle.findSnappedPieces = function(event, ui) {
+puzzle.pieceDraggableStart = function(event, ui) {
+	// when we start moving a piece, we must clear fit classes
+	$(this).removeClass("pieceFits").removeClass("pieceDoesNotFit");
+};
+
+puzzle.pieceDraggableStop = function(event, ui) {
+	// when we stop moving a piece, we find the snapped pieces
+	puzzle.findSnappedPieces(event, ui, this);
+};
+
+puzzle.findSnappedPieces = function(element, ui, that) {
 	// define some vars used below
-	var snapped, snappedTo, doesI
+	var snapped, snappedTo;
 	var piecePairsArray = [];
 	var piecePairs = {};
 
 	// determine if there are any pieces snapped together
-	snapped = $(this).data("draggable").snapElements;
+	snapped = $(that).data("draggable").snapElements;
 	snappedTo = $.map(snapped, function(element) {
 		return element.snapping ? element.item : null;
 	});
@@ -18,7 +28,7 @@ puzzle.findSnappedPieces = function(event, ui) {
 		for (var i=0; i<snappedTo.length; i++) {
 
 			// find the data for the pieces snapped together
-			piecePairs = puzzle.findPiecePairs(this, snappedTo[i]);
+			piecePairs = puzzle.findPiecePairs(that, snappedTo[i]);
 
 			if (piecePairs) {
 				// add each piece pair data to the array
@@ -134,4 +144,60 @@ puzzle.verifyPieceFits = function(piecePairsArray) {
 		}
 	}
 };
+
+puzzle.flippersDroppableDrop = function(event, ui) {
+	// when we drop a piece in this droppable, reset the offset
+	// to center the piece in this area.
+	// 90 / 4 is the additional area, we divide by 2 to get the one side
+	var offsetTop = $(this).offset().top + ((90 / 4) / 2);
+	var offsetLeft = $(this).offset().left + ((90 / 4) / 2);
+	$(ui.draggable).offset({
+		top: offsetTop,
+		left: offsetLeft
+	});
+
+	// now flip the piece based on the flipper
+	var flipperId = this.id;
+	var pieceId = ui.draggable.context.id
+	var piece = puzzle.puzzlePieces[pieceId];
+	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
+	if (flipperId.indexOf("horizontal") !== -1) {
+		// flip horizontally
+		console.log("flip horizontally " + pieceId);
+		var oldTop = piece.topValue;
+		var oldBottom = piece.bottomValue;
+		// flip the values for this piece in our static puzzle piece object
+		piece.topValue = oldBottom;
+		piece.bottomValue = oldTop;
+		// backbone's driving the rendering, so set it there as well
+		var model = piece.model;
+		model.set("topValue", oldBottom);
+		model.set("bottomValue", oldTop);
+	} else {
+		// flip vertically
+		console.log("flip vertically " + pieceId);
+		var oldLeft = piece.leftValue;
+		var oldRight = piece.rightValue;
+		// flip the values for this piece in our static puzzle piece object
+		piece.leftValue = oldRight;
+		piece.rightValue = oldLeft;
+		// backbone's driving the rendering, so set it there as well
+		var model = piece.model;
+		model.set("leftValue", oldRight);
+		model.set("rightValue", oldLeft);
+	}
+	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
+};
+
+puzzle.flippersDroppableOver = function(event, ui) {
+	// clear the content when we move a piece over our flipper
+	$("#" + this.id + ' .flip-content').css("display", "none")
+}
+
+puzzle.flippersDroppableOut = function(event, ui) {
+	// restore the content when we move a piece out of our flipper
+	$("#" + this.id + ' .flip-content').css("display", "")
+}
+
+
 
