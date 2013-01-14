@@ -97,10 +97,6 @@ puzzle.findPiecePairs = function(pieceA, pieceB) {
 };
 
 puzzle.verifyPieceFits = function(piecePairsArray) {
-	var doesItFit = true;
-	var fitPieceIds = [];
-	var failPieceIds = [];
-
 	// loop on the array to make sure each pieceA fits with pieceB
 	if (piecePairsArray && piecePairsArray.length > 0) {
 		for (var i=0; i<piecePairsArray.length; i++) {
@@ -113,34 +109,13 @@ puzzle.verifyPieceFits = function(piecePairsArray) {
 			// does piece A fit with piece B?
 			if (piecePairs.pieceANumber + piecePairs.pieceBNumber !== 0) {
 				// awww... you failed at life
-				doesItFit = false;
-				if (failPieceIds.indexOf(piecePairs.pieceAId) === -1) {
-					failPieceIds.push(piecePairs.pieceAId);
-				}
-				if (failPieceIds.indexOf(piecePairs.pieceBId) === -1) {
-					failPieceIds.push(piecePairs.pieceBId);
-				}
+				$("#" + piecePairs.pieceAId).addClass("pieceDoesNotFit");
+				$("#" + piecePairs.pieceBId).addClass("pieceDoesNotFit");
 			} else {
 				// yay! win! let's remember these IDs for later
-				if (fitPieceIds.indexOf(piecePairs.pieceAId) === -1) {
-					fitPieceIds.push(piecePairs.pieceAId);
-				}
-				if (fitPieceIds.indexOf(piecePairs.pieceBId) === -1) {
-					fitPieceIds.push(piecePairs.pieceBId);
-				}
+				$("#" + piecePairs.pieceAId).addClass("pieceFits");
+				$("#" + piecePairs.pieceBId).addClass("pieceFits");
 			}
-		}
-	}
-
-	if (doesItFit) {
-		console.log("*** YES ***");
-		for (var i=0; i<fitPieceIds.length; i++) {
-			$("#" + fitPieceIds[i]).addClass("pieceFits");
-		}
-	} else {
-		console.log("*** NO ***");
-		for (var i=0; i<failPieceIds.length; i++) {
-			$("#" + failPieceIds[i]).addClass("pieceDoesNotFit");
 		}
 	}
 };
