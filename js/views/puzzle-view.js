@@ -58,7 +58,7 @@ $(function( $ ) {
 
 			// create a view using the piece, and add it to our page
 			var pieceView = new puzzle.PieceView({ model: pieceModel });
-			$('#pieces').append(pieceView.render().el);
+			$('#pieces').append(pieceView.render().el).append('&nbsp;&nbsp;');
 		}
 	});
 });

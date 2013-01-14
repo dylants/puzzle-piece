@@ -149,8 +149,8 @@ puzzle.flippersDroppableDrop = function(event, ui) {
 	// when we drop a piece in this droppable, reset the offset
 	// to center the piece in this area.
 	// 90 / 4 is the additional area, we divide by 2 to get the one side
-	var offsetTop = $(this).offset().top + ((90 / 4) / 2);
-	var offsetLeft = $(this).offset().left + ((90 / 4) / 2);
+	var offsetTop = $(this).offset().top + ((90 / 3) / 2);
+	var offsetLeft = $(this).offset().left + ((90 / 3) / 2);
 	$(ui.draggable).offset({
 		top: offsetTop,
 		left: offsetLeft
@@ -164,18 +164,6 @@ puzzle.flippersDroppableDrop = function(event, ui) {
 	if (flipperId.indexOf("horizontal") !== -1) {
 		// flip horizontally
 		console.log("flip horizontally " + pieceId);
-		var oldTop = piece.topValue;
-		var oldBottom = piece.bottomValue;
-		// flip the values for this piece in our static puzzle piece object
-		piece.topValue = oldBottom;
-		piece.bottomValue = oldTop;
-		// backbone's driving the rendering, so set it there as well
-		var model = piece.model;
-		model.set("topValue", oldBottom);
-		model.set("bottomValue", oldTop);
-	} else {
-		// flip vertically
-		console.log("flip vertically " + pieceId);
 		var oldLeft = piece.leftValue;
 		var oldRight = piece.rightValue;
 		// flip the values for this piece in our static puzzle piece object
@@ -185,6 +173,18 @@ puzzle.flippersDroppableDrop = function(event, ui) {
 		var model = piece.model;
 		model.set("leftValue", oldRight);
 		model.set("rightValue", oldLeft);
+	} else {
+		// flip vertically
+		console.log("flip vertically " + pieceId);
+		var oldTop = piece.topValue;
+		var oldBottom = piece.bottomValue;
+		// flip the values for this piece in our static puzzle piece object
+		piece.topValue = oldBottom;
+		piece.bottomValue = oldTop;
+		// backbone's driving the rendering, so set it there as well
+		var model = piece.model;
+		model.set("topValue", oldBottom);
+		model.set("bottomValue", oldTop);
 	}
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
 };

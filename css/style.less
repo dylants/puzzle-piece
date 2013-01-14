@@ -4,7 +4,7 @@
 #puzzle {
 	margin: 20px;
 	p {
-		margin-bottom: 50px;
+		margin-bottom: 20px;
 	}
 }
 
@@ -48,8 +48,8 @@
 
 #flippers {
 	#flip-horizontally, #flip-vertically {
-		width: @piece-width + (@piece-width / 4);
-		height: @piece-height + (@piece-height / 4);
+		width: @piece-width + (@piece-width / 3);
+		height: @piece-height + (@piece-height / 3);
 		display: table;
 		background-color: rgb(127, 188, 245);
 		color: #000;	
@@ -59,6 +59,7 @@
 		display: block;
 	}
 	.flip-content {
+		padding: 2px;
 		display: table-cell;
 		vertical-align: middle;
 		text-align: center;
