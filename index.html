@@ -11,7 +11,7 @@
 <body>
 	<div id="puzzle">
 		<p>
-			Move the pieces so they fit in a square. Pieces will only fit together if their edges add to zero.
+			Move the pieces so they fit in a square. Pieces will only fit together if their sides add to zero.
 		</p>
 		<span id="pieces"></span>
 		<br/>
@@ -31,6 +31,24 @@
 					move piece here<br/>
 					to flip vertically<br/>
 					\/
+				</div>
+			</div>
+			<div id="flip-buffer"></div>
+			<div id="spin-right">
+				<div class="flip-content">
+					----&gt;<br/>
+					move piece here<br/>
+					to spin to the right<br/>
+					&lt;----
+				</div>
+			</div>
+			<div id="flip-buffer"></div>
+			<div id="spin-left">
+				<div class="flip-content">
+					&lt;----<br/>
+					move piece here<br/>
+					to spin to the left<br/>
+					----&gt;
 				</div>
 			</div>
 		</div>

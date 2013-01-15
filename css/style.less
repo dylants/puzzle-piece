@@ -1,11 +1,24 @@
 @piece-width: 90px;
 @piece-height: 90px;
 
+body {
+	background-color: whiteSmoke;
+}
+
 #puzzle {
 	margin: 20px;
 	p {
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 	}
+}
+
+#pieces {
+	background-color: #DDD;
+	padding: 15px;
+	display: inline-block;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
 .piece {
@@ -46,8 +59,13 @@
 	}
 }
 
+.piece-space-filler {
+	width: 10px;
+	display: inline-block;
+}
+
 #flippers {
-	#flip-horizontally, #flip-vertically {
+	#flip-horizontally, #flip-vertically, #spin-right, #spin-left {
 		width: @piece-width + (@piece-width / 3);
 		height: @piece-height + (@piece-height / 3);
 		display: table;
@@ -66,14 +84,15 @@
 	}
 }
 
-.pieceDoesNotFit {
+.piece-fits {
+   -moz-box-shadow:    inset 0 0 0 2px rgb(0, 255, 0);
+   -webkit-box-shadow: inset 0 0 0 2px rgb(0, 255, 0);
+   box-shadow:         inset 0 0 0 2px rgb(0, 255, 0);
+}
+
+.piece-does-not-fit {
    -moz-box-shadow:    inset 0 0 0 2px rgb(255, 0, 0);
    -webkit-box-shadow: inset 0 0 0 2px rgb(255, 0, 0);
    box-shadow:         inset 0 0 0 2px rgb(255, 0, 0);
 }
 
-.pieceFits {
-   -moz-box-shadow:    inset 0 0 0 2px rgb(0, 255, 0);
-   -webkit-box-shadow: inset 0 0 0 2px rgb(0, 255, 0);
-   box-shadow:         inset 0 0 0 2px rgb(0, 255, 0);
-}

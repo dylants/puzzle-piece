@@ -15,6 +15,8 @@ $(function( $ ) {
 			for (var name in puzzle.puzzlePieces) {
 				this.addPuzzlePiece(name);
 			}
+			// after all the pieces have been added, remove the last space filler
+			$('#pieces .piece-space-filler:last-child').remove();
 
 			// allow the pieces to be moved around
 			$('.piece').draggable({
@@ -25,12 +27,7 @@ $(function( $ ) {
 			});
 
 			// now setup the flip boxes
-			$('#flip-horizontally').droppable({
-				drop: puzzle.flippersDroppableDrop,
-				over: puzzle.flippersDroppableOver,
-				out: puzzle.flippersDroppableOut
-			});
-			$('#flip-vertically').droppable({
+			$('#flip-horizontally, #flip-vertically, #spin-right, #spin-left').droppable({
 				drop: puzzle.flippersDroppableDrop,
 				over: puzzle.flippersDroppableOver,
 				out: puzzle.flippersDroppableOut
@@ -58,7 +55,8 @@ $(function( $ ) {
 
 			// create a view using the piece, and add it to our page
 			var pieceView = new puzzle.PieceView({ model: pieceModel });
-			$('#pieces').append(pieceView.render().el).append('&nbsp;&nbsp;');
+			// append the piece and a space filler to make the individual pieces easier to see
+			$('#pieces').append(pieceView.render().el).append('<span class="piece-space-filler"></span');
 		}
 	});
 });
