@@ -21,7 +21,7 @@ $(function( $ ) {
 
 		render: function() {
 			$(this.el).html( this.template( this.model.toJSON() ) );
-			$(this.el).attr('id', this.model.get("name"));
+			$(this.el).attr('id', this.model.get("id"));
 			return this;
 		}
 

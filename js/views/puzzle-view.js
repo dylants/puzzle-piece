@@ -12,8 +12,8 @@ $(function( $ ) {
 
 		initialize: function() {
 			// Add all the pieces to the puzzle
-			for (var name in puzzle.puzzlePieces) {
-				this.addPuzzlePiece(name);
+			for (var id in puzzle.puzzlePieces) {
+				this.addPuzzlePiece(id);
 			}
 			// after all the pieces have been added, remove the last space filler
 			$('#pieces .piece-space-filler:last-child').remove();
@@ -37,13 +37,13 @@ $(function( $ ) {
 		render: function() {
 		},
 
-		addPuzzlePiece: function(puzzlePieceName) {
+		addPuzzlePiece: function(puzzlePieceId) {
 			// retrieve the values of the puzzle piece
-			var puzzlePieceValues = puzzle.puzzlePieces[puzzlePieceName];
+			var puzzlePieceValues = puzzle.puzzlePieces[puzzlePieceId];
 
 			// create a piece
 			var pieceModel = new puzzle.Piece({
-				name: puzzlePieceName,
+				id: puzzlePieceId,
 				topValue: puzzlePieceValues.topValue,
 				leftValue: puzzlePieceValues.leftValue,
 				rightValue: puzzlePieceValues.rightValue,
