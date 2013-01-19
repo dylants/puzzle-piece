@@ -3,8 +3,7 @@ var puzzle = puzzle || {};
 puzzle.pieceDraggableStart = function(event, ui) {
 	// when we start to move a piece, we're essentially detaching it from
 	// the other pieces that were snapped to it. This means we must modify
-	// the piece model's ID snapped arrays
-
+	// the piece model's IDs snapped array
 
 	// let's start by looking at the pieces connected to this piece
 	var model = puzzle.puzzlePieces[this.id].model;
@@ -18,8 +17,10 @@ puzzle.pieceDraggableStart = function(event, ui) {
 			console.log(connectedPieceModel.get("id") + " is no longer connected to " + this.id);
 
 			// if at this point, this connected piece has no more pieces connected,
-			// then clear it's piece fits class
-			$(connectedPieceModel.get("id")).removeClass("piece-fits");
+			if (connectedPieceModel.getSnappedToMeCounter() <= 0) {
+				// then clear it's piece fits class
+				$("#" + connectedPieceModel.get("id")).removeClass("piece-fits");
+			}
 		}
 
 		// after that, clear the pieceIdsSnappedToMe since we're moving this piece out
@@ -73,7 +74,7 @@ puzzle.findPiecesSnappedToMe = function(pieceQuery) {
 	}
 
 	return snappedToMe;
-}
+};
 
 puzzle.loadSnapData = function(pieceA, pieceB) {
 	// We can determine where it's snapped based on the offsets
@@ -135,22 +136,31 @@ puzzle.showUserIfPieceFits = function(snapDataArray) {
 	var successPairs = {};
 	var i, pieceAId, snapData;
 
-	// loop on the array to make sure each pieceA fits with pieceB
+	// sanity check just to make sure there's some data to act on
 	if (snapDataArray && snapDataArray.length > 0) {
+		// What we're going to do here is basically two things. First, we loop
+		// through the snap data which contains each "snap" or connection between
+		// two pieces. Looking at this will tell us if the two pieces actually
+		// fit together (if their numbers add to 0). We store this in a *Pairs
+		// object based on if it fit or not. After all that is done, if any failures
+		// exist, we consider the piece not to fit and show the animation. However,
+		// if no failures exist, we consider the piece to fit and show success.
+
+		// loop on the array to make sure each pieceA fits with pieceB
 		for (i=0; i<snapDataArray.length; i++) {
 			snapData = snapDataArray[i];
 
 			console.log("piece: " + snapData.pieceAId + " side " + snapData.pieceANumber + 
 				" connected to " + snapData.pieceBId + " side " + snapData.pieceBNumber);
 
-			// does piece A fit with piece B?
+			// if the numbers when added together do NOT equal 0 they do not fit
 			if (snapData.pieceANumber + snapData.pieceBNumber !== 0) {
-				// awww... you failed at life, remember for later
+				// record this for later in our failure object of arrays
 				if (!failurePairs[snapData.pieceAId]) {
 					// store piece B's ID under piece A
 					failurePairs[snapData.pieceAId] = [snapData.pieceBId];
 				} else {
-					// add piece B's ID to piece A
+					// add piece B's ID to piece A's list of failures
 					failurePairs[snapData.pieceAId].push(snapData.pieceBId);
 				}
 			} else {
@@ -159,7 +169,7 @@ puzzle.showUserIfPieceFits = function(snapDataArray) {
 					// store piece B's ID under piece A
 					successPairs[snapData.pieceAId] = [snapData.pieceBId];
 				} else {
-					// add piece B's ID to piece A
+					// add piece B's ID to piece A's list of successes
 					successPairs[snapData.pieceAId].push(snapData.pieceBId);
 				}
 			}
@@ -189,6 +199,7 @@ puzzle.showUserIfPieceFits = function(snapDataArray) {
 					}
 				});
 			}
+		// else if there were no failures and some success...
 		} else if (!$.isEmptyObject(successPairs)) {
 			// loop over all the success IDs, update the models, and highlight them
 			for (pieceAId in successPairs) {
@@ -208,97 +219,3 @@ puzzle.showUserIfPieceFits = function(snapDataArray) {
 		}
 	}
 };
-
-puzzle.flippersDroppableDrop = function(event, ui) {
-	// when we drop a piece in this droppable, reset the offset
-	// to center the piece in this area.
-	// 90 / 4 is the additional area, we divide by 2 to get the one side
-	var offsetTop = $(this).offset().top + ((90 / 3) / 2);
-	var offsetLeft = $(this).offset().left + ((90 / 3) / 2);
-	$(ui.draggable).offset({
-		top: offsetTop,
-		left: offsetLeft
-	});
-
-	// now flip the piece based on the flipper
-	var flipperId = this.id;
-	var pieceId = ui.draggable.context.id
-	var piece = puzzle.puzzlePieces[pieceId];
-	var oldTop, oldLeft, oldRight, oldBottom, model;
-	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
-	if (flipperId.indexOf("horizontal") !== -1) {
-		// flip horizontally
-		console.log("flip horizontally " + pieceId);
-		oldLeft = piece.leftValue;
-		oldRight = piece.rightValue;
-		// flip the values for this piece in our static puzzle piece object
-		piece.leftValue = oldRight;
-		piece.rightValue = oldLeft;
-		// backbone's driving the rendering, so set it there as well
-		model = piece.model;
-		model.set("leftValue", oldRight);
-		model.set("rightValue", oldLeft);
-	} else if (flipperId.indexOf("vertical") !== -1) {
-		// flip vertically
-		console.log("flip vertically " + pieceId);
-		oldTop = piece.topValue;
-		oldBottom = piece.bottomValue;
-		// flip the values for this piece in our static puzzle piece object
-		piece.topValue = oldBottom;
-		piece.bottomValue = oldTop;
-		// backbone's driving the rendering, so set it there as well
-		model = piece.model;
-		model.set("topValue", oldBottom);
-		model.set("bottomValue", oldTop);
-	} else if (flipperId.indexOf("spin-right") !== -1) {
-		// spin to the right
-		console.log("spin to the right " + pieceId);
-		oldTop = piece.topValue;
-		oldLeft = piece.leftValue;
-		oldRight = piece.rightValue;
-		oldBottom = piece.bottomValue;
-		// spin the piece to the right in our static puzzle piece object
-		piece.topValue = oldLeft;
-		piece.leftValue = oldBottom;
-		piece.rightValue = oldTop;
-		piece.bottomValue = oldRight;
-		// backbone's driving the rendering, so set it there as well
-		model = piece.model;
-		model.set("topValue", oldLeft);
-		model.set("leftValue", oldBottom);
-		model.set("rightValue", oldTop);
-		model.set("bottomValue", oldRight);
-	} else if (flipperId.indexOf("spin-left") !== -1) {
-		// spin to the left
-		console.log("spin to the left " + pieceId);
-		oldTop = piece.topValue;
-		oldLeft = piece.leftValue;
-		oldRight = piece.rightValue;
-		oldBottom = piece.bottomValue;
-		// spin the piece to the left in our static puzzle piece object
-		piece.topValue = oldRight;
-		piece.leftValue = oldTop;
-		piece.rightValue = oldBottom;
-		piece.bottomValue = oldLeft;
-		// backbone's driving the rendering, so set it there as well
-		model = piece.model;
-		model.set("topValue", oldRight);
-		model.set("leftValue", oldTop);
-		model.set("rightValue", oldBottom);
-		model.set("bottomValue", oldLeft);
-	}
-	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
-};
-
-puzzle.flippersDroppableOver = function(event, ui) {
-	// clear the content when we move a piece over our flipper
-	$("#" + this.id + ' .flip-content').css("display", "none")
-}
-
-puzzle.flippersDroppableOut = function(event, ui) {
-	// restore the content when we move a piece out of our flipper
-	$("#" + this.id + ' .flip-content').css("display", "")
-}
-
-
-

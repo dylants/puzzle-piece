@@ -5,6 +5,13 @@ $(function() {
 
 	puzzle.Piece = Backbone.Model.extend({
 
+		// normally we can just set the defaults as a hash, but because
+		// we have an object (the pieceIdsSnappedToMe array), it will be
+		// passed by reference to all instances of this model. In that
+		// case we must use a function for defaults which will create a
+		// new array for each instance of this model.
+		// @see http://backbonejs.org/#Model-defaults
+		// @see http://stackoverflow.com/a/9975060
 		defaults: function() {
 			return {
 				id: 0,
@@ -16,8 +23,12 @@ $(function() {
 			};
 		},
 
-		// not really necessary in this prototype app, but hey, why not?
-		localStorage: new Store("Puzzle"),
+		// in order to use save() in the methods below, we must either
+		// configure our model/collection to have a backend storage through
+		// REST APIs, or configure local storage. Neither are really needed
+		// for this application since the state is not intended to be
+		// preserved, so we won't use local storage here.
+		//localStorage: new Store("Puzzle"),
 
 		getSnappedToMeCounter: function() {
 			return this.get("pieceIdsSnappedToMe").length;
@@ -26,25 +37,17 @@ $(function() {
 		addPieceIdSnappedToMe: function(pieceId) {
 			// add the piece ID to the pieceIdsSnappedToMe array
 			this.get("pieceIdsSnappedToMe").push(pieceId);
-			// then save this to the backend storage/db
-			// (which is optional in this prototype application)
-			this.save();
 		},
 
 		removePieceIdSnappedToMe: function(pieceId) {
 			// to remove the ID, we'll splice the array at the index of the pieceId
 			this.get("pieceIdsSnappedToMe").splice(
 				this.attributes.pieceIdsSnappedToMe.indexOf(pieceId), 1);
-			// then save this to the backend storage/db
-			// (which is optional in this prototype application)
-			this.save();
 		},
 
 		clearPieceIdsSnappedToMe: function() {
-			// this is an all in one call, save the data while clearing the array
-			this.save({
-				pieceIdsSnappedToMe: []
-			});
+			// to clear the array, let's just set it to empty array
+			this.set("pieceIdsSnappedToMe", []);
 		}
 
 	});
