@@ -1,6 +1,6 @@
-var puzzle = puzzle || {};
+puzzle.piece = puzzle.piece || {};
 
-puzzle.pieceDraggableStart = function(event, ui) {
+puzzle.piece.draggableStart = function(event, ui) {
 	// when we start to move a piece, we're essentially detaching it from
 	// the other pieces that were snapped to it. This means we must modify
 	// the piece model's IDs snapped array
@@ -32,18 +32,21 @@ puzzle.pieceDraggableStart = function(event, ui) {
 	$(this).removeClass("piece-fits").removeClass("piece-does-not-fit");
 };
 
-puzzle.pieceDraggableStop = function(event, ui) {
+puzzle.piece.draggableStop = function(event, ui) {
 	// determine if there are any pieces snapped to the piece that was moved
-	var piecesSnappedToMe = puzzle.findPiecesSnappedToMe(this);
+	var piecesSnappedToMe = puzzle.piece.findPiecesSnappedToMe(this);
 
 	// if the user snapped this piece to (at least) one other piece
 	if (piecesSnappedToMe && piecesSnappedToMe.length > 0) {
 		// show the user the outcome of the snap
-		puzzle.pieceWasSnapped(this, piecesSnappedToMe);
+		puzzle.piece.pieceWasSnapped(this, piecesSnappedToMe);
 	}
+
+	// after all is said and done, let's see if we won
+	puzzle.didIWin();
 };
 
-puzzle.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
+puzzle.piece.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
 	// define some vars used below
 	var snapData = {};
 	var snapDataArray = [];
@@ -51,7 +54,7 @@ puzzle.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
 	for (var i=0; i<piecesSnappedToMovedPiece.length; i++) {
 
 		// find the data for the pieces snapped together
-		snapData = puzzle.loadSnapData(movedPiece, piecesSnappedToMovedPiece[i]);
+		snapData = puzzle.piece.loadSnapData(movedPiece, piecesSnappedToMovedPiece[i]);
 
 		if (snapData) {
 			// add each piece pair data to the array
@@ -60,10 +63,10 @@ puzzle.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
 	}
 
 	// now alert the user if these pieces fit
-	puzzle.showUserIfPieceFits(snapDataArray);
+	puzzle.piece.showUserIfPieceFits(snapDataArray);
 };
 
-puzzle.findPiecesSnappedToMe = function(pieceQuery) {
+puzzle.piece.findPiecesSnappedToMe = function(pieceQuery) {
 	var snappedToMe;
 
 	var snapElements = $(pieceQuery).data("draggable").snapElements;
@@ -76,7 +79,7 @@ puzzle.findPiecesSnappedToMe = function(pieceQuery) {
 	return snappedToMe;
 };
 
-puzzle.loadSnapData = function(pieceA, pieceB) {
+puzzle.piece.loadSnapData = function(pieceA, pieceB) {
 	// We can determine where it's snapped based on the offsets
 	if (pieceA.offsetLeft === pieceB.offsetLeft) {
 		// they are on top of eachother
@@ -131,7 +134,7 @@ puzzle.loadSnapData = function(pieceA, pieceB) {
 	}
 };
 
-puzzle.showUserIfPieceFits = function(snapDataArray) {
+puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 	var failurePairs = {};
 	var successPairs = {};
 	var i, pieceAId, snapData;

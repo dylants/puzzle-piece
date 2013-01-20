@@ -1,6 +1,6 @@
-var puzzle = puzzle || {};
+puzzle.flipper = puzzle.flipper || {};
 
-puzzle.flippersDroppableDrop = function(event, ui) {
+puzzle.flipper.droppableDrop = function(event, ui) {
 	// when we drop a piece in this droppable, reset the offset
 	// to center the piece in this area.
 	// 90 / 4 is the additional area, we divide by 2 to get the one side
@@ -81,12 +81,12 @@ puzzle.flippersDroppableDrop = function(event, ui) {
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
 };
 
-puzzle.flippersDroppableOver = function(event, ui) {
+puzzle.flipper.droppableOver = function(event, ui) {
 	// clear the content when we move a piece over our flipper
 	$("#" + this.id + ' .flip-content').css("display", "none")
 };
 
-puzzle.flippersDroppableOut = function(event, ui) {
+puzzle.flipper.droppableOut = function(event, ui) {
 	// restore the content when we move a piece out of our flipper
 	$("#" + this.id + ' .flip-content').css("display", "")
 };

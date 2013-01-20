@@ -22,15 +22,15 @@ $(function( $ ) {
 			$('.piece').draggable({
 				snap: ".piece",
 				snapMode: "both",
-				start: puzzle.pieceDraggableStart,
-				stop: puzzle.pieceDraggableStop
+				start: puzzle.piece.draggableStart,
+				stop: puzzle.piece.draggableStop
 			});
 
 			// now setup the flip boxes
 			$('#flip-horizontally, #flip-vertically, #spin-right, #spin-left').droppable({
-				drop: puzzle.flippersDroppableDrop,
-				over: puzzle.flippersDroppableOver,
-				out: puzzle.flippersDroppableOut
+				drop: puzzle.flipper.droppableDrop,
+				over: puzzle.flipper.droppableOver,
+				out: puzzle.flipper.droppableOut
 			});
 		},
 
@@ -42,7 +42,7 @@ $(function( $ ) {
 			var puzzlePieceValues = puzzle.puzzlePieces[puzzlePieceId];
 
 			// create a piece
-			var pieceModel = new puzzle.Piece({
+			var pieceModel = new puzzle.PieceModel({
 				id: puzzlePieceId,
 				topValue: puzzlePieceValues.topValue,
 				leftValue: puzzlePieceValues.leftValue,

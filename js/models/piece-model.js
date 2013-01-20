@@ -3,7 +3,7 @@ var puzzle = puzzle || {};
 $(function() {
 	'use strict';
 
-	puzzle.Piece = Backbone.Model.extend({
+	puzzle.PieceModel = Backbone.Model.extend({
 
 		// normally we can just set the defaults as a hash, but because
 		// we have an object (the pieceIdsSnappedToMe array), it will be
@@ -31,7 +31,11 @@ $(function() {
 		//localStorage: new Store("Puzzle"),
 
 		getSnappedToMeCounter: function() {
-			return this.get("pieceIdsSnappedToMe").length;
+			if (this.get("pieceIdsSnappedToMe")) {
+				return this.get("pieceIdsSnappedToMe").length;
+			} else {
+				return 0;
+			}
 		},
 
 		addPieceIdSnappedToMe: function(pieceId) {
