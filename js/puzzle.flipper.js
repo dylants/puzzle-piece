@@ -83,10 +83,10 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 
 puzzle.flipper.droppableOver = function(event, ui) {
 	// clear the content when we move a piece over our flipper
-	$("#" + this.id + ' .flip-content').css("display", "none")
+	$("#" + this.id + ' .toggle-content').css("display", "none")
 };
 
 puzzle.flipper.droppableOut = function(event, ui) {
 	// restore the content when we move a piece out of our flipper
-	$("#" + this.id + ' .flip-content').css("display", "")
+	$("#" + this.id + ' .toggle-content').css("display", "")
 };

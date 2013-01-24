@@ -13,13 +13,17 @@ body {
 	margin-left: auto;
 	width: 70%;
 	height: 650px;
-	padding: 50px;
+	padding: 20px 50px 50px 50px;
 	-moz-border-radius: 30px;
 	-webkit-border-radius: 30px;
 	border-radius: 30px;
 	-moz-box-shadow: inset 0 0 30px rgb(102, 102, 102);
 	-webkit-box-shadow: inset 0 0 30px rgb(102, 102, 102);
 	box-shadow: inset 0 0 30px rgb(102, 102, 102);
+	h1 {
+		font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+		text-align: center;
+	}
 	p {
 		margin-bottom: 15px;
 		text-align: center;
@@ -122,11 +126,24 @@ body {
 		height: 25px;
 		display: block;
 	}
-	.flip-content {
+	.toggle-content {
+		font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
 		padding: 2px;
 		//display: inline-block;
 		vertical-align: middle;
 		text-align: center;
+	}
+	#flip-horizontally .toggle-content {
+		padding-top: 30px;
+	}
+	#flip-vertically .toggle-content {
+		padding-top: 20px;
+	}
+	#spin-right .toggle-content {
+		padding-top: 20px;
+	}
+	#spin-left .toggle-content {
+		padding-top: 20px;
 	}
 }
 
