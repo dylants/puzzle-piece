@@ -13,42 +13,49 @@
 		<p>
 			Move the pieces so they fit in a square. Pieces will only fit together if their sides add to zero.
 		</p>
-		<span id="pieces"></span>
-		<br/>
-		<br/>
-		<div id="flippers">
-			<div id="flip-horizontally">
-				<div class="flip-content">
-					move piece here<br/>
-					to flip horizontally<br/>
-					&lt; -- &gt;
+		<div id="pieces"></div>
+		<div id="toggles">
+			<div id="row0">
+				<div class="flippers-heading toggle-heading">
+					FLIPPERS
+				</div>
+				<div class="spinners-heading toggle-heading">
+					SPINNERS
 				</div>
 			</div>
-			<div id="flip-buffer"></div>
-			<div id="flip-vertically">
-				<div class="flip-content">
-					/\ <br/>
-					move piece here<br/>
-					to flip vertically<br/>
-					\/
+			<div id="row1">
+				<div id="flip-horizontally" class="flippers">
+					<div class="flip-content">
+						move piece here<br/>
+						to flip horizontally<br/>
+						&lt; -- &gt;
+					</div>
+				</div>
+				<div id="spin-right" class="spinners">
+					<div class="flip-content">
+						----&gt;<br/>
+						move piece here<br/>
+						to spin to the right<br/>
+						&lt;----
+					</div>
 				</div>
 			</div>
-			<div id="flip-buffer"></div>
-			<div id="spin-right">
-				<div class="flip-content">
-					----&gt;<br/>
-					move piece here<br/>
-					to spin to the right<br/>
-					&lt;----
+			<div id="row2">
+				<div id="flip-vertically" class="flippers">
+					<div class="flip-content">
+						/\ <br/>
+						move piece here<br/>
+						to flip vertically<br/>
+						\/
+					</div>
 				</div>
-			</div>
-			<div id="flip-buffer"></div>
-			<div id="spin-left">
-				<div class="flip-content">
-					&lt;----<br/>
-					move piece here<br/>
-					to spin to the left<br/>
-					----&gt;
+				<div id="spin-left" class="spinners">
+					<div class="flip-content">
+						&lt;----<br/>
+						move piece here<br/>
+						to spin to the left<br/>
+						----&gt;
+					</div>
 				</div>
 			</div>
 		</div>

@@ -5,7 +5,7 @@ $(function( $ ) {
 
 	puzzle.PieceView = Backbone.View.extend({
 
-		tagName: 'span',
+		tagName: 'div',
 
 		className: 'piece',
 

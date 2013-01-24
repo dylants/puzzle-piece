@@ -2,31 +2,54 @@
 @piece-height: 90px;
 
 body {
-	background-color: whiteSmoke;
+	background-color: rgba(0, 0, 0, 0.8);
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 #puzzle {
-	margin: 20px;
+	background-color: whiteSmoke;
+	margin-top: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 70%;
+	height: 650px;
+	padding: 50px;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+	-moz-box-shadow: inset 0 0 30px rgb(102, 102, 102);
+	-webkit-box-shadow: inset 0 0 30px rgb(102, 102, 102);
+	box-shadow: inset 0 0 30px rgb(102, 102, 102);
 	p {
 		margin-bottom: 15px;
+		text-align: center;
 	}
 }
 
 #pieces {
 	background-color: #DDD;
 	padding: 15px;
-	display: inline-block;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
+	width: (@piece-width * 9) + (10px * 8);
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .piece {
 	width: @piece-width;
 	height: @piece-height;
 	display: inline-block;
-	background-color: #B8B8B8;
 	color: #000;
+	background-color: #B8B8B8;
+	border: 2px solid rgb(102, 102, 102);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: border .3s ease-in-out;
+	-moz-transition: border .3s ease-in-out;
+	transition: border .3s ease-in-out;
 	.top {
 		height: @piece-height / 3;
 		text-align: center;
@@ -35,20 +58,20 @@ body {
 		height: @piece-height / 3;
 		.left {
 			padding-left: 3px;
-			width: @piece-width / 2 - 5;
+			width: @piece-width / 2 - 7;
 			display: inline-block;
 			text-align: left;
 			padding-top: 5px;
 		}
 		.right {
-			width: @piece-width / 2 - 5;
+			width: @piece-width / 2 - 7;
 			display: inline-block;
 			text-align: right;
 			padding-top: 5px;
 		}
 	}
 	.bottom {
-		height: @piece-height / 3;
+		height: @piece-height / 3 - 2;
 		position: relative;
 		.bottom-content {
 			width: @piece-width;
@@ -64,13 +87,36 @@ body {
 	display: inline-block;
 }
 
-#flippers {
-	#flip-horizontally, #flip-vertically, #spin-right, #spin-left {
+#toggles {
+	margin-top: 20px;
+	.toggle-heading {
+		font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;
+		font-size: large;
+		width: @piece-width + (@piece-width / 3);
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	.flippers-heading {
+		float: left;
+	}
+	.spinners, .spinners-heading {
+		float: right;
+	}
+	#row1 {
+		clear: both;
+	}
+	#row2 {
+		padding-top: 20px;
+	}
+	.flippers, .spinners {
 		width: @piece-width + (@piece-width / 3);
 		height: @piece-height + (@piece-height / 3);
-		display: table;
+		display: inline-block;
 		background-color: rgb(127, 188, 245);
 		color: #000;	
+		-moz-box-shadow: 5px 5px 5px rgb(102, 102, 102);
+		-webkit-box-shadow: 5px 5px 5px rgb(102, 102, 102);
+		box-shadow: 5px 5px 5px rgb(102, 102, 102);
 	}
 	#flip-buffer {
 		height: 25px;
@@ -78,21 +124,17 @@ body {
 	}
 	.flip-content {
 		padding: 2px;
-		display: table-cell;
+		//display: inline-block;
 		vertical-align: middle;
 		text-align: center;
 	}
 }
 
 .piece-fits {
-   -moz-box-shadow:    inset 0 0 0 2px rgb(0, 255, 0);
-   -webkit-box-shadow: inset 0 0 0 2px rgb(0, 255, 0);
-   box-shadow:         inset 0 0 0 2px rgb(0, 255, 0);
+	border: 2px solid rgb(0, 255, 0);
 }
 
 .piece-does-not-fit {
-   -moz-box-shadow:    inset 0 0 0 2px rgb(255, 0, 0);
-   -webkit-box-shadow: inset 0 0 0 2px rgb(255, 0, 0);
-   box-shadow:         inset 0 0 0 2px rgb(255, 0, 0);
+	border: 2px solid rgb(255, 0, 0);
 }
 

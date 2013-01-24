@@ -56,7 +56,7 @@ $(function( $ ) {
 			// create a view using the piece, and add it to our page
 			var pieceView = new puzzle.PieceView({ model: pieceModel });
 			// append the piece and a space filler to make the individual pieces easier to see
-			$('#pieces').append(pieceView.render().el).append('<span class="piece-space-filler"></span');
+			$('#pieces').append(pieceView.render().el).append('<div class="piece-space-filler"></div');
 		}
 	});
 });

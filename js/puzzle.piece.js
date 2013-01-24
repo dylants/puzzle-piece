@@ -188,7 +188,7 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 					$("#" + failurePairs[pieceAId][i]).addClass("piece-does-not-fit");
 				}
 				// move the main piece back to the start
-				$("#" + pieceAId).animate({
+				$("#" + pieceAId).delay(300).animate({
 					top: 0,
 					left: 0
 				}, {
