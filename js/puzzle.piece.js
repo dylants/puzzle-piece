@@ -180,6 +180,8 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 
 		// if there are some failures, handle them all at once
 		if (!$.isEmptyObject(failurePairs)) {
+			// play the failure sound
+			document.getElementById("audio-failure").play();
 			for (pieceAId in failurePairs) {
 				// first show failure on the main piece
 				$("#" + pieceAId).addClass("piece-does-not-fit");
@@ -204,6 +206,8 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 			}
 		// else if there were no failures and some success...
 		} else if (!$.isEmptyObject(successPairs)) {
+			// play the success sound
+			document.getElementById("audio-success").play();
 			// loop over all the success IDs, update the models, and highlight them
 			for (pieceAId in successPairs) {
 				// highlight piece A

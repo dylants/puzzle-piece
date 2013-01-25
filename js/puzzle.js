@@ -19,6 +19,8 @@ puzzle.didIWin = function() {
 
 	if (totalSidesConnected === puzzle.winningNumber) {
 		console.log("*** YOU WON! ***");
+		// play the win sound (in 2 seconds -- after the success sound)
+		setTimeout(function(){document.getElementById("audio-win").play()}, 1500);
 	}
 };
 

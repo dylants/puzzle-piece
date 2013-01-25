@@ -18,6 +18,8 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 	var oldTop, oldLeft, oldRight, oldBottom, model;
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
 	if (flipperId.indexOf("horizontal") !== -1) {
+		// play the flip sound
+		document.getElementById("audio-flip").play();
 		// flip horizontally
 		console.log("flip horizontally " + pieceId);
 		oldLeft = piece.leftValue;
@@ -30,6 +32,8 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model.set("leftValue", oldRight);
 		model.set("rightValue", oldLeft);
 	} else if (flipperId.indexOf("vertical") !== -1) {
+		// play the flip sound
+		document.getElementById("audio-flip").play();
 		// flip vertically
 		console.log("flip vertically " + pieceId);
 		oldTop = piece.topValue;
@@ -42,6 +46,8 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model.set("topValue", oldBottom);
 		model.set("bottomValue", oldTop);
 	} else if (flipperId.indexOf("spin-right") !== -1) {
+		// play the spin sound
+		document.getElementById("audio-spin").play();
 		// spin to the right
 		console.log("spin to the right " + pieceId);
 		oldTop = piece.topValue;
@@ -60,6 +66,8 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model.set("rightValue", oldTop);
 		model.set("bottomValue", oldRight);
 	} else if (flipperId.indexOf("spin-left") !== -1) {
+		// play the spin sound
+		document.getElementById("audio-spin").play();
 		// spin to the left
 		console.log("spin to the left " + pieceId);
 		oldTop = piece.topValue;
