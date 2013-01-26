@@ -1,13 +1,32 @@
 @piece-width: 90px;
 @piece-height: 90px;
 
+// These are the colors of the shapes themselves
+@color-one: #F13A00;
+@color-two: #F18500;
+@color-three: #006099;
+@color-three-lighter: #3393CC;
+@color-four: #00A953;
+@old-toggle-color: rgb(127, 188, 245);
+
+@puzzle-outside-background-color: rgba(0, 0, 0, 0.8);
+@puzzle-board-background-color: rgb(240, 240, 240);
+@puzzle-shadow: rgb(102, 102, 102);
+@puzzle-piece-holder-background-color: #DDD;
+@puzzle-piece-color: rgb(100, 100, 100);//#B8B8B8;
+
+@piece-fits-color: #00C100;
+@piece-does-not-fit-color: #F10000;
+
+@toggle-color: @color-three-lighter;
+
 body {
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: @puzzle-outside-background-color;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 #puzzle {
-	background-color: whiteSmoke;
+	background-color: @puzzle-board-background-color;
 	margin-top: 20px;
 	margin-right: auto;
 	margin-left: auto;
@@ -18,9 +37,9 @@ body {
 	-moz-border-radius: 30px;
 	-webkit-border-radius: 30px;
 	border-radius: 30px;
-	-moz-box-shadow: inset 0 0 30px rgb(102, 102, 102);
-	-webkit-box-shadow: inset 0 0 30px rgb(102, 102, 102);
-	box-shadow: inset 0 0 30px rgb(102, 102, 102);
+	-moz-box-shadow: inset 0 0 30px @puzzle-shadow;
+	-webkit-box-shadow: inset 0 0 30px @puzzle-shadow;
+	box-shadow: inset 0 0 30px @puzzle-shadow;
 	h1 {
 		font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;
 		text-align: center;
@@ -32,7 +51,7 @@ body {
 }
 
 #pieces {
-	background-color: #DDD;
+	background-color: @puzzle-piece-holder-background-color;
 	padding: 15px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -47,8 +66,8 @@ body {
 	height: @piece-height;
 	display: inline-block;
 	color: #000;
-	background-color: #B8B8B8;
-	border: 2px solid rgb(102, 102, 102);
+	background-color: @puzzle-piece-color;
+	border: 2px solid @puzzle-shadow;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -175,11 +194,11 @@ body {
 		width: @piece-width + (@piece-width / 3);
 		height: @piece-height + (@piece-height / 3);
 		display: inline-block;
-		background-color: rgb(127, 188, 245);
+		background-color: @toggle-color;
 		color: #000;	
-		-moz-box-shadow: 5px 5px 5px rgb(102, 102, 102);
-		-webkit-box-shadow: 5px 5px 5px rgb(102, 102, 102);
-		box-shadow: 5px 5px 5px rgb(102, 102, 102);
+		-moz-box-shadow: 5px 5px 5px @puzzle-shadow;
+		-webkit-box-shadow: 5px 5px 5px @puzzle-shadow;
+		box-shadow: 5px 5px 5px @puzzle-shadow;
 	}
 	#flip-buffer {
 		height: 25px;
@@ -209,10 +228,10 @@ body {
 }
 
 .piece-fits {
-	border: 2px solid rgb(0, 255, 0);
+	border: 2px solid @piece-fits-color;
 }
 
 .piece-does-not-fit {
-	border: 2px solid rgb(255, 0, 0);
+	border: 2px solid @piece-does-not-fit-color;
 }
 
