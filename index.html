@@ -12,7 +12,7 @@
 	<div id="puzzle">
 		<h1>Puzzle Piece</h1>
 		<p>
-			Move the pieces so they fit in a square. Pieces will only fit together if their sides add to zero.
+			Move the pieces so they fit in a 3x3 square. Pieces will only fit together if their sides match.
 		</p>
 		<div id="pieces"></div>
 		<div id="toggles">
@@ -63,20 +63,14 @@
 	</div>
 	<script type="text/template" id="piece-template">
 		<div class="top">
-			<%- topValue %>
+			<span class="top-bottom-shape <%- topClass %>"></span>
 		</div>
 		<div class="middle">
-			<span class="left">
-				<%- leftValue %>
-			</span>
-			<span class="right">
-				<%- rightValue %>
-			</span>
+			<span class="left left-right-shape <%- leftClass %>"></span>
+			<span class="right left-right-shape <%- rightClass %>"></span>
 		</div>
 		<div class="bottom">
-			<span class="bottom-content">
-				<%- bottomValue %>
-			</span>
+			<span class="top-bottom-shape <%- bottomClass %>"></span>
 		</div>
 	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

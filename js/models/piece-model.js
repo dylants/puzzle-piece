@@ -16,11 +16,74 @@ $(function() {
 			return {
 				id: 0,
 				topValue: 0,
+				topClass: "",
 				leftValue: 0,
+				leftClass: "",
 				rightValue: 0,
+				rightClass: "",
 				bottomValue: 0,
+				bottomClass: "",
 				pieceIdsSnappedToMe: []
 			};
+		},
+
+		initialize: function() {
+			switch (this.get("topValue")) {
+				case 1:
+					this.set("topClass", "bottom-circle");
+					break;
+				case 2:
+					this.set("topClass", "bottom-diamond");
+					break;
+				case 3:
+					this.set("topClass", "bottom-square");
+					break;
+				case 4:
+					this.set("topClass", "bottom-octogon");
+					break;
+			}
+			switch (this.get("bottomValue")) {
+				case 1:
+					this.set("bottomClass", "top-circle");
+					break;
+				case 2:
+					this.set("bottomClass", "top-diamond");
+					break;
+				case 3:
+					this.set("bottomClass", "top-square");
+					break;
+				case 4:
+					this.set("bottomClass", "top-octogon");
+					break;
+			}
+			switch (this.get("leftValue")) {
+				case 1:
+					this.set("leftClass", "right-circle");
+					break;
+				case 2:
+					this.set("leftClass", "right-diamond");
+					break;
+				case 3:
+					this.set("leftClass", "right-square");
+					break;
+				case 4:
+					this.set("leftClass", "right-octogon");
+					break;
+			}
+			switch (this.get("rightValue")) {
+				case 1:
+					this.set("rightClass", "left-circle");
+					break;
+				case 2:
+					this.set("rightClass", "left-diamond");
+					break;
+				case 3:
+					this.set("rightClass", "left-square");
+					break;
+				case 4:
+					this.set("rightClass", "left-octogon");
+					break;
+			}
 		},
 
 		// in order to use save() in the methods below, we must either

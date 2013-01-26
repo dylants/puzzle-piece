@@ -144,7 +144,7 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 		// What we're going to do here is basically two things. First, we loop
 		// through the snap data which contains each "snap" or connection between
 		// two pieces. Looking at this will tell us if the two pieces actually
-		// fit together (if their numbers add to 0). We store this in a *Pairs
+		// fit together (if their numbers are equal). We store this in a *Pairs
 		// object based on if it fit or not. After all that is done, if any failures
 		// exist, we consider the piece not to fit and show the animation. However,
 		// if no failures exist, we consider the piece to fit and show success.
@@ -156,8 +156,8 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 			console.log("piece: " + snapData.pieceAId + " side " + snapData.pieceANumber + 
 				" connected to " + snapData.pieceBId + " side " + snapData.pieceBNumber);
 
-			// if the numbers when added together do NOT equal 0 they do not fit
-			if (snapData.pieceANumber + snapData.pieceBNumber !== 0) {
+			// if the numbers are NOT equal they do not fit
+			if (snapData.pieceANumber !== snapData.pieceBNumber) {
 				// record this for later in our failure object of arrays
 				if (!failurePairs[snapData.pieceAId]) {
 					// store piece B's ID under piece A

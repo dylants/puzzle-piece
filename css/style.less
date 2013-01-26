@@ -22,7 +22,6 @@ body {
 	-webkit-box-shadow: inset 0 0 30px rgb(102, 102, 102);
 	box-shadow: inset 0 0 30px rgb(102, 102, 102);
 	h1 {
-		//font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
 		font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;
 		text-align: center;
 	}
@@ -57,36 +56,93 @@ body {
 	-moz-transition: border .3s ease-in-out;
 	transition: border .3s ease-in-out;
 	.top {
-		height: @piece-height / 3;
+		height: 17px;
 		text-align: center;
 	}
 	.middle {
-		height: @piece-height / 3;
+		height: 44px;
 		.left {
-			padding-left: 3px;
-			width: @piece-width / 2 - 7;
+			width: 24px;
 			display: inline-block;
 			text-align: left;
-			padding-top: 5px;
 		}
 		.right {
-			width: @piece-width / 2 - 7;
+			width: 24px;
 			display: inline-block;
 			text-align: right;
-			padding-top: 5px;
+			margin-left: 34px;
 		}
 	}
 	.bottom {
-		height: @piece-height / 3 - 2;
+		height: 20px;
 		position: relative;
-		.bottom-content {
-			width: @piece-width;
-			position: absolute;
-			bottom: 0;
-			text-align: center;
-		}
 	}
 }
+
+
+.top-bottom-shape, .left-right-shape {
+	background-image: url('/images/sides.png');
+	background-repeat: no-repeat;	
+}
+.top-bottom-shape {
+	height: 25px;
+	width: 50px;
+	margin-left: 17px;
+	display: block;
+}
+.left-right-shape {
+	height: 55px;
+	background-position: -26px 0px;
+}
+.top-circle {
+	background-position: 0px 1px;
+}
+.bottom-circle {
+	background-position: 0px -29px;
+}
+.top-diamond {
+	background-position: -54px 3px;
+}
+.bottom-diamond {
+	background-position: -54px -29px;
+}
+.top-square {
+	background-position: -108px 3px;
+}
+.bottom-square {
+	background-position: -108px -29px;
+}
+.top-octogon {
+	background-position: -160px 2px;
+}
+.bottom-octogon {
+	background-position: -160px -29px;
+}
+.left-circle {
+	background-position: -1px 0px;
+}
+.right-circle {
+	background-position: -26px 0px;
+}
+.left-diamond {
+	background-position: -54px 0px;
+}
+.right-diamond {
+	background-position: -80px 0px;
+}
+.left-square {
+	background-position: -109px 0px;
+}
+.right-square {
+	background-position: -135px 0px;
+}
+.left-octogon {
+	background-position: -161px 0px;
+}
+.right-octogon {
+	background-position: -186px 0px;
+}
+
 
 .piece-space-filler {
 	width: 10px;
@@ -132,7 +188,6 @@ body {
 	.toggle-content {
 		font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
 		padding: 2px;
-		//display: inline-block;
 		vertical-align: middle;
 		text-align: center;
 	}
