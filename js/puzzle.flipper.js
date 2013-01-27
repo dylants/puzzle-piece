@@ -165,6 +165,10 @@ puzzle.flipper.spinPiece = function(model, toRight) {
 puzzle.flipper.setCSSTransform = function(id, rotateX, rotateY, rotate) {
 	$("#" + id).css("-webkit-transform", "rotateX(" + rotateX + "deg) " 
 		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+	$("#" + id).css("-moz-transform", "rotateX(" + rotateX + "deg) " 
+		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+	$("#" + id).css("transform", "rotateX(" + rotateX + "deg) " 
+		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
 }
 
 puzzle.flipper.droppableOver = function(event, ui) {
