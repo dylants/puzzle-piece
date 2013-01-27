@@ -30,7 +30,10 @@ $(function( $ ) {
 			$('#flip-horizontally, #flip-vertically, #spin-right, #spin-left').droppable({
 				drop: puzzle.flipper.droppableDrop,
 				over: puzzle.flipper.droppableOver,
-				out: puzzle.flipper.droppableOut
+				out: puzzle.flipper.droppableOut,
+				activate: function() {
+					console.log("***id: " + this.id);
+				}
 			});
 		},
 

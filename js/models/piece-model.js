@@ -23,7 +23,10 @@ $(function() {
 				rightClass: "",
 				bottomValue: 0,
 				bottomClass: "",
-				pieceIdsSnappedToMe: []
+				pieceIdsSnappedToMe: [],
+				rotateX: 0,
+				rotateY: 0,
+				rotate: 0
 			};
 		},
 

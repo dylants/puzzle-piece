@@ -11,6 +11,9 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		left: offsetLeft
 	});
 
+	// remove the content from view
+	$("#" + this.id + ' .toggle-content').css("display", "none");
+
 	// now flip the piece based on the flipper
 	var flipperId = this.id;
 	var pieceId = ui.draggable.context.id
@@ -31,6 +34,7 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model = piece.model;
 		model.set("leftValue", oldRight);
 		model.set("rightValue", oldLeft);
+		puzzle.flipper.flipPieceY(model);
 	} else if (flipperId.indexOf("vertical") !== -1) {
 		// play the flip sound
 		document.getElementById("audio-flip").play();
@@ -45,6 +49,7 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model = piece.model;
 		model.set("topValue", oldBottom);
 		model.set("bottomValue", oldTop);
+		puzzle.flipper.flipPieceX(model);
 	} else if (flipperId.indexOf("spin-right") !== -1) {
 		// play the spin sound
 		document.getElementById("audio-spin").play();
@@ -65,6 +70,7 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model.set("leftValue", oldBottom);
 		model.set("rightValue", oldTop);
 		model.set("bottomValue", oldRight);
+		puzzle.flipper.spinPiece(model, true);
 	} else if (flipperId.indexOf("spin-left") !== -1) {
 		// play the spin sound
 		document.getElementById("audio-spin").play();
@@ -85,16 +91,88 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 		model.set("leftValue", oldTop);
 		model.set("rightValue", oldBottom);
 		model.set("bottomValue", oldLeft);
+		puzzle.flipper.spinPiece(model, false);
 	}
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
 };
 
+puzzle.flipper.flipPieceX = function(model) {
+	var rotateXValue;
+
+	// here we want to take the existing rotateX value found in the model,
+	// (which represents the value in the transform css property), and add
+	// 180 degrees to it to "flip" the piece along the X axis.
+	rotateXValue = model.get("rotateX");
+	rotateXValue += 180;
+	model.set("rotateX", rotateXValue);
+
+	// now set it as the css property to flip the piece
+	puzzle.flipper.setCSSTransform(model.get("id"), rotateXValue, model.get("rotateY"), model.get("rotate"));
+};
+
+puzzle.flipper.flipPieceY = function(model) {
+	var rotateYValue;
+
+	// here we want to take the existing rotateY value found in the model,
+	// (which represents the value in the transform css property), and add
+	// 180 degrees to it to "flip" the piece along the Y axis.
+	rotateYValue = model.get("rotateY");
+	rotateYValue += 180;
+	model.set("rotateY", rotateYValue);
+
+	// now set it as the css property to flip the piece
+	puzzle.flipper.setCSSTransform(model.get("id"), model.get("rotateX"), rotateYValue, model.get("rotate"));
+};
+
+puzzle.flipper.spinPiece = function(model, toRight) {
+	var rotateValue, rotateXValue, rotateYValue, opposite;
+
+	// here we want to take the existing rotate value found in the model,
+	// (which represents the value in the transform css property), and either
+	// add or subtract (depending on if it's toRight or not) 90 degrees to
+	// it to "spin" the piece.  To make things more interesting (hah!), if
+	// the piece is currently rotated in the x + y direction a factor of 180
+	// degrees, we must spin the opposite way.  If it's a factor of 360, it's
+	// the same as if it was not rotated at all.
+	rotateXValue = model.get("rotateX");
+	rotateYValue = model.get("rotateY");
+	if (((rotateXValue + rotateYValue) % 360) === 0) {
+		opposite = false;
+	} else {
+		opposite = true;
+	}
+
+	rotateValue = model.get("rotate");
+	if (toRight) {
+		if (opposite) {
+			rotateValue -= 90;			
+		} else {
+			rotateValue += 90;			
+		}
+	} else {
+		if (opposite) {
+			rotateValue += 90;			
+		} else {
+			rotateValue -= 90;			
+		}
+	}
+	model.set("rotate", rotateValue);
+
+	// now set it as the css property to spin the piece
+	puzzle.flipper.setCSSTransform(model.get("id"), rotateXValue, rotateYValue, rotateValue);
+};
+
+puzzle.flipper.setCSSTransform = function(id, rotateX, rotateY, rotate) {
+	$("#" + id).css("-webkit-transform", "rotateX(" + rotateX + "deg) " 
+		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+}
+
 puzzle.flipper.droppableOver = function(event, ui) {
 	// clear the content when we move a piece over our flipper
-	$("#" + this.id + ' .toggle-content').css("color", "rgb(127, 188, 245);");
+	$("#" + this.id + ' .toggle-content').css("color", "#3393CC");
 };
 
 puzzle.flipper.droppableOut = function(event, ui) {
 	// restore the content when we move a piece out of our flipper
-	$("#" + this.id + ' .toggle-content').css("color", "");
+	$("#" + this.id + ' .toggle-content').css("display", "").css("color", "");
 };
