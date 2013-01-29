@@ -19,8 +19,15 @@ puzzle.didIWin = function() {
 
 	if (totalSidesConnected === puzzle.winningNumber) {
 		console.log("*** YOU WON! ***");
-		// play the win sound (in 2 seconds -- after the success sound)
-		setTimeout(function(){document.getElementById("audio-win").play()}, 1500);
+		// play the win sound (in bit -- after the final piece fitting success sound)
+		setTimeout(function() {
+			document.getElementById("audio-win").play();
+
+			// woh.. a setTimeout in a setTimeout... inception?
+			setTimeout(function() {
+				puzzle.winningModal();
+			}, 5000);
+		}, 1500);
 	}
 };
 
@@ -49,6 +56,24 @@ puzzle.winningNumberOfSidesConnected = function() {
 	var winningNumber = algorithm(n);
 	console.log("winning number: " + winningNumber);
 	return winningNumber;
+}
+
+puzzle.winningModal = function() {
+	// silly, but we have to show then hide then show it for effect
+    $("#win-background").css("visibility", "visible").hide().fadeIn(500);
+
+    // setup the buttons
+    $("#play-again").click( function() {
+    	// hide our modal
+    	$("#win-background").css("visibility", "hidden");
+
+    	// reload the page to "play again" (this could be better...)
+    	location.reload();
+    });
+    $("#close").click( function() {
+    	// hide our modal
+    	$("#win-background").css("visibility", "hidden");
+    });
 }
 
 // static set of puzzle pieces for a 3x3 square

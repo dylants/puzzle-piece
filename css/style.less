@@ -20,6 +20,9 @@
 
 @toggle-color: @color-three-lighter;
 
+
+@puzzle-height: 650px;
+
 body {
 	background-color: @puzzle-outside-background-color;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -40,7 +43,7 @@ body {
 	margin-left: auto;
 	width: 70%;
 	min-width: 920px;
-	height: 650px;
+	height: @puzzle-height;
 	padding: 20px 50px 50px 50px;
 	-moz-border-radius: 30px;
 	-webkit-border-radius: 30px;
@@ -242,5 +245,63 @@ body {
 
 .piece-does-not-fit {
 	border: 2px solid @piece-does-not-fit-color;
+}
+
+
+#win-background {
+	visibility: hidden;
+	background-color: @puzzle-outside-background-color;
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	#win-modal {
+		font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;
+		background-color: black;
+		color: @puzzle-board-background-color;
+		-moz-border-radius: 30px;
+		-webkit-border-radius: 30px;
+		border-radius: 30px;
+		-moz-box-shadow: inset 0 0 30px @puzzle-shadow;
+		-webkit-box-shadow: inset 0 0 30px @puzzle-shadow;
+		box-shadow: inset 0 0 30px @puzzle-shadow;
+		padding: 20px;
+		display:block;
+		width: 250px;
+		margin-right: auto;
+		margin-left: auto;
+		text-align: center;
+		margin-top: @puzzle-height / 3;
+		.win-actions {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+			color: @puzzle-board-background-color;
+			background-color: black;
+			-moz-border-radius: 30px;
+			-webkit-border-radius: 30px;
+			border-radius: 30px;
+			border: 1px solid @puzzle-board-background-color;
+			width: 80px;
+			padding: 5px;
+			display: inline-block;
+			-webkit-transition: -webkit-box-shadow .1s ease-in-out;
+			-moz-transition: -moz-box-shadow .1s ease-in-out;
+			transition: box-shadow .1s ease-in-out;
+			&:hover {
+				-webkit-box-shadow: inset 0 0 15px @puzzle-board-background-color;
+				-moz-box-shadow: inset 0 0 15px @puzzle-board-background-color;
+				box-shadow: inset 0 0 15px @puzzle-board-background-color;
+			}
+		}
+		#play-again {
+			margin-right: 10px;
+		}
+		#close {
+			margin-left: 10px;
+		}
+	}
 }
 
