@@ -1,5 +1,12 @@
 puzzle.piece = puzzle.piece || {};
 
+/**
+ * Function that is called when a piece enters the draggable start state, meaning it's just
+ * began to be moved around the puzzle board.  This is a jQuery UI event.
+ *
+ * @param  {object} event The jQuery UI event
+ * @param  {object} ui    The jQuery UI object
+ */
 puzzle.piece.draggableStart = function(event, ui) {
 	// when we start to move a piece, we're essentially detaching it from
 	// the other pieces that were snapped to it. This means we must modify
@@ -32,6 +39,13 @@ puzzle.piece.draggableStart = function(event, ui) {
 	$(this).removeClass("piece-fits").removeClass("piece-does-not-fit");
 };
 
+/**
+ * This function is called when a piece stops being dragged, or is placed somewhere
+ * on the puzzle board.
+ *
+ * @param  {object} event The jQuery UI event
+ * @param  {object} ui    The jQuery UI object
+ */
 puzzle.piece.draggableStop = function(event, ui) {
 	// determine if there are any pieces snapped to the piece that was moved
 	var piecesSnappedToMe = puzzle.piece.findPiecesSnappedToMe(this);
@@ -46,6 +60,13 @@ puzzle.piece.draggableStop = function(event, ui) {
 	puzzle.didIWin();
 };
 
+/**
+ * We now know a piece was snapped to some other piece, this function is called to determine
+ * what to do next (was the snap a valid placement of this piece?)
+ *
+ * @param  {object} movedPiece The piece that was moved and snapped to other piece(s)
+ * @param  {array} piecesSnappedToMovedPiece An array of pieces snapped to the movedPiece
+ */
 puzzle.piece.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
 	// define some vars used below
 	var snapData = {};
@@ -66,6 +87,11 @@ puzzle.piece.pieceWasSnapped = function(movedPiece, piecesSnappedToMovedPiece) {
 	puzzle.piece.showUserIfPieceFits(snapDataArray);
 };
 
+/**
+ * Finds pieces that were snapped to this piece
+ * @param  {string} pieceQuery The query to use in jQuery to find the current piece
+ * @return {array} An array of pieces (or the data about those pieces) snapped to this piece
+ */
 puzzle.piece.findPiecesSnappedToMe = function(pieceQuery) {
 	var snappedToMe;
 
@@ -79,6 +105,14 @@ puzzle.piece.findPiecesSnappedToMe = function(pieceQuery) {
 	return snappedToMe;
 };
 
+/**
+ * This function takes data on two pieces and determines information relative for this puzzle
+ * game (the sides, ids, and values touching) for this connection.
+ *
+ * @param  {object} pieceA The data jQuery has on our piece A
+ * @param  {object} pieceB The data jQuery has on our piece B
+ * @return {object} An object which contains the id, side, and number for piece A and piece B
+ */
 puzzle.piece.loadSnapData = function(pieceA, pieceB) {
 	// We can determine where it's snapped based on the offsets
 	if (pieceA.offsetLeft === pieceB.offsetLeft) {
@@ -134,6 +168,12 @@ puzzle.piece.loadSnapData = function(pieceA, pieceB) {
 	}
 };
 
+/**
+ * Depending on if the piece fits with all other pieces it is now connected to, this
+ * function will either display a success or error animation.
+ *
+ * @param  {array} snapDataArray An array of data on the pieces snapped together
+ */
 puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 	var failurePairs = {};
 	var successPairs = {};
@@ -153,7 +193,7 @@ puzzle.piece.showUserIfPieceFits = function(snapDataArray) {
 		for (i=0; i<snapDataArray.length; i++) {
 			snapData = snapDataArray[i];
 
-			console.log("piece: " + snapData.pieceAId + " side " + snapData.pieceANumber + 
+			console.log("piece: " + snapData.pieceAId + " side " + snapData.pieceANumber +
 				" connected to " + snapData.pieceBId + " side " + snapData.pieceBNumber);
 
 			// if the numbers are NOT equal they do not fit

@@ -30,6 +30,8 @@ $(function() {
 			};
 		},
 
+		// our giant initialize function which sets the css classes based on
+		// the initial values for this puzzle piece
 		initialize: function() {
 			switch (this.get("topValue")) {
 				case 1:

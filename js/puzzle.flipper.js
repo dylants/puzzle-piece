@@ -1,5 +1,12 @@
 puzzle.flipper = puzzle.flipper || {};
 
+/**
+ * This giant function is called when a piece drops into a flipper (toggle), which could
+ * flip or spin the piece depending on which toggle the piece was dropped into.
+ *
+ * @param  {object} event The jQuery UI event
+ * @param  {object} ui    The jQuery UI object
+ */
 puzzle.flipper.droppableDrop = function(event, ui) {
 	// when we drop a piece in this droppable, reset the offset
 	// to center the piece in this area.
@@ -16,7 +23,7 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 
 	// now flip the piece based on the flipper
 	var flipperId = this.id;
-	var pieceId = ui.draggable.context.id
+	var pieceId = ui.draggable.context.id;
 	var piece = puzzle.puzzlePieces[pieceId];
 	var oldTop, oldLeft, oldRight, oldBottom, model;
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
@@ -96,6 +103,11 @@ puzzle.flipper.droppableDrop = function(event, ui) {
 	console.log(JSON.stringify(puzzle.puzzlePieces[pieceId]));
 };
 
+/**
+ * Flips the puzzle piece along the x axis
+ *
+ * @param  {object} model The backbone model for this piece
+ */
 puzzle.flipper.flipPieceX = function(model) {
 	var rotateXValue;
 
@@ -110,6 +122,11 @@ puzzle.flipper.flipPieceX = function(model) {
 	puzzle.flipper.setCSSTransform(model.get("id"), rotateXValue, model.get("rotateY"), model.get("rotate"));
 };
 
+/**
+ * Flips the piece along the y axis
+ *
+ * @param  {object} model The backbone model for this piece
+ */
 puzzle.flipper.flipPieceY = function(model) {
 	var rotateYValue;
 
@@ -124,6 +141,12 @@ puzzle.flipper.flipPieceY = function(model) {
 	puzzle.flipper.setCSSTransform(model.get("id"), model.get("rotateX"), rotateYValue, model.get("rotate"));
 };
 
+/**
+ * Spins the piece either to the right or to the left 90 degrees.
+ *
+ * @param  {object} model The backbone model for this piece
+ * @param  {boolean} toRight Should we spin this piece to the right? False for left
+ */
 puzzle.flipper.spinPiece = function(model, toRight) {
 	var rotateValue, rotateXValue, rotateYValue, opposite;
 
@@ -145,15 +168,15 @@ puzzle.flipper.spinPiece = function(model, toRight) {
 	rotateValue = model.get("rotate");
 	if (toRight) {
 		if (opposite) {
-			rotateValue -= 90;			
+			rotateValue -= 90;
 		} else {
-			rotateValue += 90;			
+			rotateValue += 90;
 		}
 	} else {
 		if (opposite) {
-			rotateValue += 90;			
+			rotateValue += 90;
 		} else {
-			rotateValue -= 90;			
+			rotateValue -= 90;
 		}
 	}
 	model.set("rotate", rotateValue);
@@ -162,20 +185,40 @@ puzzle.flipper.spinPiece = function(model, toRight) {
 	puzzle.flipper.setCSSTransform(model.get("id"), rotateXValue, rotateYValue, rotateValue);
 };
 
+/**
+ * This generic function applies a css transform to our piece, either flipping it or spinning it.
+ *
+ * @param {string} id      The ide of the piece
+ * @param {number} rotateX The rotateX value
+ * @param {number} rotateY The rotateY value
+ * @param {number} rotate  The rotate value
+ */
 puzzle.flipper.setCSSTransform = function(id, rotateX, rotateY, rotate) {
-	$("#" + id).css("-webkit-transform", "rotateX(" + rotateX + "deg) " 
-		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
-	$("#" + id).css("-moz-transform", "rotateX(" + rotateX + "deg) " 
-		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
-	$("#" + id).css("transform", "rotateX(" + rotateX + "deg) " 
-		+ "rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
-}
+	$("#" + id).css("-webkit-transform", "rotateX(" + rotateX + "deg) " +
+		"rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+	$("#" + id).css("-moz-transform", "rotateX(" + rotateX + "deg) " +
+		"rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+	$("#" + id).css("transform", "rotateX(" + rotateX + "deg) " +
+		"rotateY(" + rotateY + "deg) " + "rotate(" + rotate + "deg)");
+};
 
+/**
+ * This is called when a piece hovers over one of our toggles
+ *
+ * @param  {object} event The jQuery UI event
+ * @param  {object} ui    The jQuery UI object
+ */
 puzzle.flipper.droppableOver = function(event, ui) {
 	// clear the content when we move a piece over our flipper
 	$("#" + this.id + ' .toggle-content').css("color", "#3393CC");
 };
 
+/**
+ * This is called when a piece moves out from one of our toggles
+ *
+ * @param  {object} event The jQuery UI event
+ * @param  {object} ui    The jQuery UI object
+ */
 puzzle.flipper.droppableOut = function(event, ui) {
 	// restore the content when we move a piece out of our flipper
 	$("#" + this.id + ' .toggle-content').css("display", "").css("color", "");

@@ -1,5 +1,12 @@
 var puzzle = puzzle || {};
 
+/**
+ * This function determines if the user has won the puzzle game, and is intended to
+ * be run everytime a piece is connected to another piece (successfully).  If the
+ * user has connected the right amount of sides together to form a square, this function
+ * will provide the winning sound and animation.
+ *
+ */
 puzzle.didIWin = function() {
 	var id, model;
 	var totalSidesConnected = 0;
@@ -31,6 +38,12 @@ puzzle.didIWin = function() {
 	}
 };
 
+/**
+ * Provides the number of sides that must be connected together successfully to
+ * win this puzzle game.
+ *
+ * @return {number} The number of sides when connected together form a square.
+ */
 puzzle.winningNumberOfSidesConnected = function() {
 	// the algorithm to determine if we've won -- meaning if the number
 	// of sides connected is equal to that of a square -- is this:
@@ -40,7 +53,7 @@ puzzle.winningNumberOfSidesConnected = function() {
 
 	// let's find n, by taking the square root of the number of pieces
 	// remember n is the number of pieces on one edge of a square, when
-	// all available pieces are used. So for a 4 piece puzzle, it will 
+	// all available pieces are used. So for a 4 piece puzzle, it will
 	// make a 2x2 square, which means n = 2. Similarly, a 9 piece puzzle
 	// will make a 3x3 square, which means n = 3.
 	var n = Math.sqrt(_.size(puzzle.puzzlePieces));
@@ -56,25 +69,29 @@ puzzle.winningNumberOfSidesConnected = function() {
 	var winningNumber = algorithm(n);
 	console.log("winning number: " + winningNumber);
 	return winningNumber;
-}
+};
 
+/**
+ * Displays the modal to signify you've won the game.
+ *
+ */
 puzzle.winningModal = function() {
 	// silly, but we have to show then hide then show it for effect
     $("#win-background").css("visibility", "visible").hide().fadeIn(500);
 
     // setup the buttons
     $("#play-again").click( function() {
-    	// hide our modal
-    	$("#win-background").css("visibility", "hidden");
+		// hide our modal
+		$("#win-background").css("visibility", "hidden");
 
-    	// reload the page to "play again" (this could be better...)
-    	location.reload();
-    });
+		// reload the page to "play again" (this could be better...)
+		location.reload();
+	});
     $("#close").click( function() {
-    	// hide our modal
-    	$("#win-background").css("visibility", "hidden");
-    });
-}
+		// hide our modal
+		$("#win-background").css("visibility", "hidden");
+	});
+};
 
 // static set of puzzle pieces for a 3x3 square
 puzzle.puzzlePieces = {
